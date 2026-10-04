@@ -136,8 +136,21 @@ PostgreSQL được publish ra máy host ở cổng `5432` (Inventory), `5433` (
 
 Inventory/CDM tự chạy migration trước khi khởi động API. Compose dùng healthcheck để chờ database, Redis và API sẵn sàng trước khi chạy các service phụ thuộc. Khởi chạy toàn bộ bằng `docker compose up -d --build` sau khi tạo `.env` theo [hướng dẫn](docs/run-prototype.md).
 
-## 6. Phần chưa hoàn thành
+## 6. Tính năng đã hoàn thành và chưa hoàn thành
 
+### Đã hoàn thành trong phạm vi prototype
+
+- Inventory API: tạo danh sách sản phẩm, lấy danh sách có bộ lọc và phân trang, truy vấn theo thời gian cập nhật.
+- Upload Excel: nhận và lưu file, xếp hàng Celery task, đọc/validate dữ liệu và import vào CDM ở nền.
+- Polling theo lịch: Celery Beat gửi task mỗi phút, Worker lấy dữ liệu Inventory được cập nhật trong một giờ gần nhất, tính đến thời điểm chạy, và lưu vào CDM.
+- Chống trùng theo nội dung bằng SHA-256, `get_or_create` và unique constraint.
+- Retry các lỗi kết nối được cấu hình tối đa 3 lần, chờ 60 giây; lưu batch trong transaction và ghi log lỗi.
+- Đóng gói backend, PostgreSQL, Redis, Worker và Beat bằng Docker Compose; API tự chạy migration khi khởi động.
+- Có dữ liệu mẫu, hướng dẫn chạy source và hướng dẫn chạy thử API.
+
+### Chưa hoàn thành
+
+- API polling thủ công còn cần hoàn thiện khoảng thời gian truy vấn và xử lý lỗi.
 - Chưa kiểm thử với tải tăng đột biến (spike) và xử lý dữ liệu đồng thời; chưa xác nhận bảo đảm exactly-once dưới tải concurrent.
 - Chưa triển khai máy chủ chạy CDC (Change Data Capture); polling hiện tại là gọi API theo thời gian cập nhật.
 - Chưa hoàn thành frontend; prototype hiện được thao tác qua API.
@@ -147,4 +160,10 @@ Inventory/CDM tự chạy migration trước khi khởi động API. Compose dù
 
 Source code: [GitHub — ksynerx-project](https://github.com/longthk17/ksynerx-project).
 
-Backend Inventory/CDM do ứng viên tự viết. AI (Codex) hỗ trợ soạn tài liệu, chỉnh cấu hình mẫu và tạo mã bản nháp frontend chưa hoàn thành trong phiên làm việc này. Các thay đổi mới cần được commit/push để bản trên Git cập nhật đúng nội dung bàn giao.
+| Phần thực hiện | Tự viết / AI hỗ trợ |
+| --- | --- |
+| Backend Inventory/CDM | Ứng viên tự viết: API, model, xử lý Excel, polling, chống trùng và Celery task |
+| Dữ liệu mockup / dữ liệu mẫu | Có AI hỗ trợ tạo dữ liệu phục vụ chạy thử |
+| Frontend | Có AI hỗ trợ xây dựng bản nháp; chưa hoàn thành |
+| Docker Compose | Có AI hỗ trợ viết và chỉnh cấu hình chạy các service |
+| README và tài liệu hướng dẫn | Có AI hỗ trợ soạn và chỉnh sửa nội dung |

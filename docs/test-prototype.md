@@ -179,7 +179,7 @@ CELERY_BEAT_SCHEDULE = {
 
 Hiện tại **mỗi phút chạy một lần** theo `crontab(minute="*")`. Celery Beat đưa task `poll_products` vào Redis; Celery Worker gọi Inventory API `/api/v1/product-query-all` với `updatedFrom` và `updatedTo`, validate dữ liệu trả về rồi insert vào `cdm-db`, bỏ qua nội dung trùng hash.
 
-Khoảng thời gian mong muốn là **`from = t - 1 giờ`, `to = t`**, lấy dữ liệu cập nhật trong `[from, to)`. Tuy nhiên, [poll_products](../backend/cdm-service/my_app/tasks.py) hiện đặt `from` bằng đầu giờ của ngày hôm trước (`shift_days=-1`), `to` bằng đầu giờ hiện tại. Ví dụ chạy lúc 10:35 ngày 05/10 thì truy vấn từ 10:00 ngày 04/10 đến 10:00 ngày 05/10. Source cần được chỉnh nếu muốn dùng khoảng một giờ như trên.
+Mỗi lần chạy, polling lấy dữ liệu **được cập nhật trong một giờ gần nhất, tính đến thời điểm chạy**. Thời gian bắt đầu (`from`) là thời điểm hiện tại lùi một giờ; thời gian kết thúc (`to`) là thời điểm hiện tại. Ví dụ chạy lúc **10:35** thì lấy dữ liệu từ **09:35 đến trước 10:35** cùng ngày, không làm tròn về đầu giờ. Trong [poll_products](../backend/cdm-service/my_app/tasks.py), hai mốc này được tính bằng `get_relative_datetime(shift_hours=-1)` và `get_relative_datetime()`.
 
 ### Chạy polling thủ công
 
@@ -191,7 +191,7 @@ curl --location 'http://127.0.0.1:8001/api/v1/product-polling-check'
 
 API gọi Inventory và insert CDM trực tiếp trong request, không tạo lịch Celery. Response trả danh sách bản ghi mới được insert; nội dung đã có cùng hash được bỏ qua.
 
-Endpoint này hiện có khoảng thời gian riêng trong [ProductPollingCheckView](../backend/cdm-service/my_app/views/views.py), với `to` đặt cố định ngày 5 của tháng; cần hoàn thiện trước khi dùng để kiểm tra khoảng `t-1h`.
+Endpoint này hiện có khoảng thời gian riêng trong [ProductPollingCheckView](../backend/cdm-service/my_app/views/views.py), với `to` đặt cố định ngày 5 của tháng; cần hoàn thiện trước khi dùng để kiểm tra dữ liệu cập nhật trong một giờ gần nhất.
 
 ## Theo dõi kết quả
 
