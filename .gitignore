@@ -32,6 +32,10 @@ coverage/
 media/
 staticfiles/
 
+# Django migrations (keep package initializers)
+**/migrations/*.py
+!**/migrations/__init__.py
+
 # Celery runtime files
 celerybeat-schedule
 celerybeat-schedule.*

@@ -11,7 +11,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.parsers import MultiPartParser
 from openpyxl import load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 
 from my_app.apps import API_VERSION, SERVICE_NAME
@@ -19,6 +19,8 @@ from my_app.configs import SERVICE_CONFIG
 from my_app.serializers.polling import ChangeDataSerializer
 from my_app.utils import get_relative_datetime, response
 from my_app.tasks import process_excel_file
+from my_app.models.change_data import ChangeData
+
 
 
 class HealthCheckView(APIView):
@@ -215,3 +217,12 @@ class ProductPollingCheckView(APIView):
             message="Health check completed",
             status_code=status.HTTP_200_OK,
         )
+
+
+class ChangeDataView(generics.ListAPIView):
+    queryset = ChangeData.objects.order_by('updated_at')
+    serializer_class = ChangeDataSerializer
+
+    def list(self, request, *args, **kwargs):
+        result = super().list(request, *args, **kwargs)
+        return response(data=result.data, message="Change data retrieved successfully")

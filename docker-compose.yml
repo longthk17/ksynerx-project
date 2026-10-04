@@ -1,15 +1,86 @@
 services:
+  inventory-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: inventory
+      POSTGRES_USER: inventory_user
+      POSTGRES_PASSWORD: "0000"
+    ports:
+      - "5432:5432"
+    volumes:
+      - inventory_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U inventory_user -d inventory"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  cdm-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: cdm
+      POSTGRES_USER: cdm_user
+      POSTGRES_PASSWORD: "0000"
+    ports:
+      - "5433:5432"
+    volumes:
+      - cdm_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cdm_user -d cdm"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
   inventory-service:
     build:
       context: ./backend/inventory-service
     env_file:
       - ./backend/inventory-service/.env
     environment:
-      DB_HOST: host.docker.internal
-      REDIS_HOST: host.docker.internal
-    command: python manage.py runserver 0.0.0.0:8000 --noreload
+      DB_HOST: inventory-db
+      DB_PORT: "5432"
+      DB_NAME: inventory
+      DB_USER: inventory_user
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_URL: redis://redis:6379/0
+    command:
+      - sh
+      - -c
+      - python manage.py migrate --noinput && exec python manage.py runserver 0.0.0.0:8000 --noreload
     ports:
       - "8000:8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import socket; socket.create_connection(('127.0.0.1', 8000), timeout=3).close()"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    depends_on:
+      inventory-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
 
   cdm-service:
@@ -18,13 +89,39 @@ services:
     env_file:
       - ./backend/cdm-service/.env
     environment:
-      DB_HOST: host.docker.internal
-      REDIS_HOST: host.docker.internal
-    command: python manage.py runserver 0.0.0.0:8000 --noreload
+      DB_HOST: cdm-db
+      DB_PORT: "5432"
+      DB_NAME: cdm
+      DB_USER: cdm_user
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/1
+      INVENTORY_PRODUCTS_SYNC_URL: http://inventory-service:8000/api/v1/product-query-all
+    command:
+      - sh
+      - -c
+      - python manage.py migrate --noinput && exec python manage.py runserver 0.0.0.0:8000 --noreload
     ports:
       - "8001:8000"
     volumes:
       - cdm_uploads:/app/media
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import socket; socket.create_connection(('127.0.0.1', 8000), timeout=3).close()"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    depends_on:
+      cdm-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
 
   cdm-worker:
@@ -33,14 +130,26 @@ services:
     env_file:
       - ./backend/cdm-service/.env
     environment:
-      DB_HOST: host.docker.internal
-      REDIS_HOST: host.docker.internal
+      DB_HOST: cdm-db
+      DB_PORT: "5432"
+      DB_NAME: cdm
+      DB_USER: cdm_user
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/1
+      INVENTORY_PRODUCTS_SYNC_URL: http://inventory-service:8000/api/v1/product-query-all
     command: celery -A my_project worker --loglevel=info --concurrency=1
     volumes:
       - cdm_uploads:/app/media
     depends_on:
+      cdm-service:
+        condition: service_healthy
       inventory-service:
-        condition: service_started
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
 
   cdm-beat:
@@ -49,10 +158,25 @@ services:
     env_file:
       - ./backend/cdm-service/.env
     environment:
-      DB_HOST: host.docker.internal
-      REDIS_HOST: host.docker.internal
+      DB_HOST: cdm-db
+      DB_PORT: "5432"
+      DB_NAME: cdm
+      DB_USER: cdm_user
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/1
+      INVENTORY_PRODUCTS_SYNC_URL: http://inventory-service:8000/api/v1/product-query-all
     command: celery -A my_project beat --loglevel=info
+    depends_on:
+      cdm-service:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:
+  inventory_db_data:
+  cdm_db_data:
+  redis_data:
   cdm_uploads:

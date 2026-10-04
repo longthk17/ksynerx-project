@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from my_app.models.product import Product
-
+from my_app.models.change_data import ChangeData
 
 class CategorySerializer(serializers.Serializer):
     categoryCode = serializers.CharField(source='category_code')
@@ -16,7 +15,7 @@ class ProductUnitSerializer(serializers.Serializer):
     isBaseUnit = serializers.BooleanField(source='is_base_unit')
 
 
-class ProductSerializer(ModelSerializer):
+class ChangeDataSerializer(ModelSerializer):
     sku = serializers.CharField(
         max_length=100, required=True, allow_blank=False, allow_null=False
     )
@@ -59,9 +58,11 @@ class ProductSerializer(ModelSerializer):
     productUnits = ProductUnitSerializer(
         many=True, source='product_units', required=False
     )
+    createdAt = serializers.DateTimeField(source='created_at', read_only=True)
+    updatedAt = serializers.DateTimeField(source='updated_at', read_only=True)
 
     class Meta:
-        model = Product
+        model = ChangeData
         fields = (
             'id',
             'partnerSKU',
@@ -73,18 +74,6 @@ class ProductSerializer(ModelSerializer):
             'isExpiryDate',
             'categories',
             'productUnits',
+            'createdAt',
+            'updatedAt',
         )
-
-
-
-class ProductQuerySerializer(serializers.Serializer):
-    updatedFrom = serializers.DateTimeField(required=True)
-    updatedTo = serializers.DateTimeField(required=True)
-
-    def validate(self, attrs):
-        if attrs["updatedFrom"] >= attrs["updatedTo"]:
-            raise serializers.ValidationError(
-                {"updatedTo": "Phải lớn hơn updatedFrom."}
-            )
-
-        return attrs

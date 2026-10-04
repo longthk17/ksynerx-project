@@ -4,7 +4,7 @@ import logging
 from arrow import arrow
 from celery import shared_task
 from django.core.files.storage import default_storage
-from django.db import transaction
+from django.db import InterfaceError, OperationalError, transaction
 from django.db import transaction
 import requests
 from rest_framework import status
@@ -13,6 +13,7 @@ from my_app.configs import SERVICE_CONFIG
 
 from my_app.serializers.polling import ChangeDataSerializer
 from my_app.utils import (
+    ExcelMappingError,
     get_relative_datetime,
     map_product_sheets,
     read_excel_sheets,
@@ -23,12 +24,25 @@ from rest_framework.exceptions import ValidationError
 logger = logging.getLogger(__name__)
 
 
-@shared_task(bind=True)
+@shared_task(bind=True,
+    autoretry_for=(
+        requests.ConnectionError,
+        requests.Timeout,
+        InterfaceError,
+        OperationalError,
+    ),
+    retry_kwargs={
+        "max_retries": 3,
+        "countdown": 60,
+    },
+    acks_late=True,
+    reject_on_worker_lost=True,
+)
 def poll_products(self):
     task_id = self.request.id
 
-    date_from = get_relative_datetime(set_minute=0, set_second=0, shift_days=-1)
-    date_to = get_relative_datetime(set_minute=0, set_second=0)
+    date_from = get_relative_datetime(shift_hours=-1)
+    date_to = get_relative_datetime()
 
     query_params = {
         "updatedFrom": date_from.isoformat(),
@@ -36,8 +50,9 @@ def poll_products(self):
     }
 
     logger.info(
-        "[%s] Polling started: from=%s to=%s",
+        "[%s] Polling started: attempt=%s from=%s to=%s",
         task_id,
+        self.request.retries + 1,
         query_params["updatedFrom"],
         query_params["updatedTo"],
     )
@@ -62,7 +77,7 @@ def poll_products(self):
                 "created_instances": created_instances,
             },
         )
-        serializer.is_valid(raise_exception=False)
+        serializer.is_valid(raise_exception=True)
 
         logger.info(
             "[%s] Validation passed: records=%s",
@@ -80,13 +95,6 @@ def poll_products(self):
             "created": len(created_instances),
             "duplicates": (len(serializer.validated_data) - len(created_instances)),
         }
-        logger.info(
-            "[%s] Polling completed: processed=%s created=%s duplicates=%s",
-            task_id,
-            summary["processed"],
-            summary["created"],
-            summary["duplicates"],
-        )
 
         return summary
 
@@ -99,14 +107,28 @@ def poll_products(self):
         raise
 
 
-@shared_task(bind=True)
+@shared_task(
+    bind=True,
+    autoretry_for=(
+        InterfaceError,
+        OperationalError,
+    ),
+    retry_kwargs={
+        "max_retries": 3,
+        "countdown": 60,
+    },
+    acks_late=True,
+    reject_on_worker_lost=True,
+)
 def process_excel_file(self, file_name):
     task_id = self.request.id
+    stage = "read_file"
 
     logger.info(
-        "[%s] Excel processing started: file=%s",
-        self.request.id,
+        "[%s] Excel processing started: file=%s attempt=%s",
+        task_id,
         file_name,
+        self.request.retries + 1,
     )
 
     try:
@@ -117,14 +139,8 @@ def process_excel_file(self, file_name):
 
         try:
             products = map_product_sheets(sheets)
-        except Exception as exc:
+        except ExcelMappingError as exc:
             raise ValidationError({"file": exc.errors}) from exc
-
-        logger.info(
-            "[%s] Excel mapped: products=%s",
-            task_id,
-            len(products),
-        )
 
         stage = "validation"
         created_instances = []
