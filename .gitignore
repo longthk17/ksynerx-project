@@ -1,0 +1,69 @@
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# Python dependencies and generated files
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.Python
+*.egg-info/
+.eggs/
+
+# Tests, coverage and tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage/
+
+# Django local data and generated assets
+*.sqlite3
+*.sqlite3-journal
+media/
+staticfiles/
+
+# Celery runtime files
+celerybeat-schedule
+celerybeat-schedule.*
+celerybeat.pid
+celeryd.pid
+celery-worker.pid
+
+# Frontend dependencies and build output
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+.output/
+.vite/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Editor and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini

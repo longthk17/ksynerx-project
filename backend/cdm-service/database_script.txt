@@ -1,0 +1,7 @@
+docker run -d --name cdm-postgres ^
+  -e POSTGRES_DB=cdm_db ^
+  -e POSTGRES_USER=cdm_user ^
+  -e POSTGRES_PASSWORD=0000 ^
+  -p 5433:5432 ^
+  -v cdm_pgdata:/var/lib/postgresql/data ^
+  postgres:16

@@ -1,0 +1,529 @@
+[
+  {
+    "sku": "DEMO_PHONE_101",
+    "partnerSKU": "PARTNER_PHONE_101",
+    "productName": "Điện thoại Nova X1",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "PHONE", "categoryName": "Điện thoại" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 4200000,
+        "sellingPrice": 5100000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "HOP",
+        "unitName": "Hộp",
+        "baseUnitQty": 5,
+        "costPrice": 21000000,
+        "sellingPrice": 25500000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_LAPTOP_102",
+    "partnerSKU": "PARTNER_LAPTOP_102",
+    "productName": "Laptop Orion 14",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "COMPUTER", "categoryName": "Máy tính" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 12500000,
+        "sellingPrice": 14900000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_MOUSE_103",
+    "partnerSKU": "PARTNER_MOUSE_103",
+    "productName": "Chuột không dây Aero",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "ACCESSORY", "categoryName": "Phụ kiện" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 180000,
+        "sellingPrice": 290000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "HOP",
+        "unitName": "Hộp",
+        "baseUnitQty": 10,
+        "costPrice": 1800000,
+        "sellingPrice": 2900000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_KEYBOARD_104",
+    "partnerSKU": "PARTNER_KEYBOARD_104",
+    "productName": "Bàn phím cơ Pulse",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "ACCESSORY", "categoryName": "Phụ kiện" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 650000,
+        "sellingPrice": 890000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_HEADPHONE_105",
+    "partnerSKU": "PARTNER_HEADPHONE_105",
+    "productName": "Tai nghe Bluetooth Echo",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [
+      { "categoryCode": "AUDIO", "categoryName": "Thiết bị âm thanh" },
+      { "categoryCode": "ELECTRONICS", "categoryName": "Điện tử" }
+    ],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 720000,
+        "sellingPrice": 990000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_CHARGER_106",
+    "partnerSKU": "PARTNER_CHARGER_106",
+    "productName": "Củ sạc nhanh 30W",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "ACCESSORY", "categoryName": "Phụ kiện" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 140000,
+        "sellingPrice": 230000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "HOP",
+        "unitName": "Hộp",
+        "baseUnitQty": 12,
+        "costPrice": 1680000,
+        "sellingPrice": 2760000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_CABLE_107",
+    "partnerSKU": "PARTNER_CABLE_107",
+    "productName": "Cáp USB-C 1 mét",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "ACCESSORY", "categoryName": "Phụ kiện" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 35000,
+        "sellingPrice": 65000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "HOP",
+        "unitName": "Hộp",
+        "baseUnitQty": 20,
+        "costPrice": 700000,
+        "sellingPrice": 1300000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_MONITOR_108",
+    "partnerSKU": "PARTNER_MONITOR_108",
+    "productName": "Màn hình Horizon 24 inch",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "COMPUTER", "categoryName": "Máy tính" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 2100000,
+        "sellingPrice": 2750000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_SPEAKER_109",
+    "partnerSKU": "PARTNER_SPEAKER_109",
+    "productName": "Loa di động Melody",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [
+      { "categoryCode": "AUDIO", "categoryName": "Thiết bị âm thanh" }
+    ],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 480000,
+        "sellingPrice": 690000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_MILK_110",
+    "partnerSKU": "PARTNER_MILK_110",
+    "productName": "Sữa tươi 180ml",
+    "unitCode": "HOP",
+    "unitName": "Hộp",
+    "serialType": 1,
+    "isExpiryDate": true,
+    "categories": [{ "categoryCode": "FOOD", "categoryName": "Thực phẩm" }],
+    "productUnits": [
+      {
+        "unitCode": "HOP",
+        "unitName": "Hộp",
+        "baseUnitQty": 1,
+        "costPrice": 5500,
+        "sellingPrice": 7500,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "THUNG",
+        "unitName": "Thùng",
+        "baseUnitQty": 48,
+        "costPrice": 264000,
+        "sellingPrice": 360000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_JUICE_111",
+    "partnerSKU": "PARTNER_JUICE_111",
+    "productName": "Nước ép cam 350ml",
+    "unitCode": "CHAI",
+    "unitName": "Chai",
+    "serialType": 1,
+    "isExpiryDate": true,
+    "categories": [{ "categoryCode": "BEVERAGE", "categoryName": "Đồ uống" }],
+    "productUnits": [
+      {
+        "unitCode": "CHAI",
+        "unitName": "Chai",
+        "baseUnitQty": 1,
+        "costPrice": 12000,
+        "sellingPrice": 18000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "THUNG",
+        "unitName": "Thùng",
+        "baseUnitQty": 24,
+        "costPrice": 288000,
+        "sellingPrice": 432000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_COFFEE_112",
+    "partnerSKU": "PARTNER_COFFEE_112",
+    "productName": "Cà phê rang xay 250g",
+    "unitCode": "GOI",
+    "unitName": "Gói",
+    "serialType": 1,
+    "isExpiryDate": true,
+    "categories": [
+      { "categoryCode": "FOOD", "categoryName": "Thực phẩm" },
+      { "categoryCode": "BEVERAGE", "categoryName": "Đồ uống" }
+    ],
+    "productUnits": [
+      {
+        "unitCode": "GOI",
+        "unitName": "Gói",
+        "baseUnitQty": 1,
+        "costPrice": 45000,
+        "sellingPrice": 69000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_TEA_113",
+    "partnerSKU": "PARTNER_TEA_113",
+    "productName": "Trà xanh túi lọc",
+    "unitCode": "HOP",
+    "unitName": "Hộp",
+    "serialType": 1,
+    "isExpiryDate": true,
+    "categories": [{ "categoryCode": "BEVERAGE", "categoryName": "Đồ uống" }],
+    "productUnits": [
+      {
+        "unitCode": "HOP",
+        "unitName": "Hộp",
+        "baseUnitQty": 1,
+        "costPrice": 28000,
+        "sellingPrice": 42000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "THUNG",
+        "unitName": "Thùng",
+        "baseUnitQty": 20,
+        "costPrice": 560000,
+        "sellingPrice": 840000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_BISCUIT_114",
+    "partnerSKU": "PARTNER_BISCUIT_114",
+    "productName": "Bánh quy bơ 200g",
+    "unitCode": "GOI",
+    "unitName": "Gói",
+    "serialType": 1,
+    "isExpiryDate": true,
+    "categories": [{ "categoryCode": "FOOD", "categoryName": "Thực phẩm" }],
+    "productUnits": [
+      {
+        "unitCode": "GOI",
+        "unitName": "Gói",
+        "baseUnitQty": 1,
+        "costPrice": 19000,
+        "sellingPrice": 30000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_SHAMPOO_115",
+    "partnerSKU": "PARTNER_SHAMPOO_115",
+    "productName": "Dầu gội thảo mộc 500ml",
+    "unitCode": "CHAI",
+    "unitName": "Chai",
+    "serialType": 1,
+    "isExpiryDate": true,
+    "categories": [
+      { "categoryCode": "PERSONAL_CARE", "categoryName": "Chăm sóc cá nhân" }
+    ],
+    "productUnits": [
+      {
+        "unitCode": "CHAI",
+        "unitName": "Chai",
+        "baseUnitQty": 1,
+        "costPrice": 65000,
+        "sellingPrice": 95000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "THUNG",
+        "unitName": "Thùng",
+        "baseUnitQty": 12,
+        "costPrice": 780000,
+        "sellingPrice": 1140000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_SOAP_116",
+    "partnerSKU": "PARTNER_SOAP_116",
+    "productName": "Xà phòng hương chanh",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": true,
+    "categories": [
+      { "categoryCode": "PERSONAL_CARE", "categoryName": "Chăm sóc cá nhân" }
+    ],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 8000,
+        "sellingPrice": 15000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_NOTEBOOK_117",
+    "partnerSKU": "PARTNER_NOTEBOOK_117",
+    "productName": "Sổ tay A5 bìa cứng",
+    "unitCode": "QUYEN",
+    "unitName": "Quyển",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [
+      { "categoryCode": "OFFICE", "categoryName": "Văn phòng phẩm" }
+    ],
+    "productUnits": [
+      {
+        "unitCode": "QUYEN",
+        "unitName": "Quyển",
+        "baseUnitQty": 1,
+        "costPrice": 22000,
+        "sellingPrice": 35000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "HOP",
+        "unitName": "Hộp",
+        "baseUnitQty": 10,
+        "costPrice": 220000,
+        "sellingPrice": 350000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_PEN_118",
+    "partnerSKU": "PARTNER_PEN_118",
+    "productName": "Bút bi mực xanh",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [
+      { "categoryCode": "OFFICE", "categoryName": "Văn phòng phẩm" }
+    ],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 2500,
+        "sellingPrice": 5000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "HOP",
+        "unitName": "Hộp",
+        "baseUnitQty": 20,
+        "costPrice": 50000,
+        "sellingPrice": 100000,
+        "isBaseUnit": false
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_BOTTLE_119",
+    "partnerSKU": "PARTNER_BOTTLE_119",
+    "productName": "Bình giữ nhiệt 600ml",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "HOUSEHOLD", "categoryName": "Gia dụng" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 110000,
+        "sellingPrice": 179000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_LAMP_120",
+    "partnerSKU": "PARTNER_LAMP_120",
+    "productName": "Đèn bàn LED Lumi",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [
+      { "categoryCode": "HOUSEHOLD", "categoryName": "Gia dụng" },
+      { "categoryCode": "ELECTRONICS", "categoryName": "Điện tử" }
+    ],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 230000,
+        "sellingPrice": 350000,
+        "isBaseUnit": true
+      }
+    ]
+  },
+  {
+    "sku": "DEMO_TOWEL_121",
+    "partnerSKU": "PARTNER_TOWEL_121",
+    "productName": "Khăn mặt cotton mềm",
+    "unitCode": "CAI",
+    "unitName": "Cái",
+    "serialType": 1,
+    "isExpiryDate": false,
+    "categories": [{ "categoryCode": "HOUSEHOLD", "categoryName": "Gia dụng" }],
+    "productUnits": [
+      {
+        "unitCode": "CAI",
+        "unitName": "Cái",
+        "baseUnitQty": 1,
+        "costPrice": 18000,
+        "sellingPrice": 29000,
+        "isBaseUnit": true
+      },
+      {
+        "unitCode": "GOI",
+        "unitName": "Gói",
+        "baseUnitQty": 5,
+        "costPrice": 90000,
+        "sellingPrice": 145000,
+        "isBaseUnit": false
+      }
+    ]
+  }
+]

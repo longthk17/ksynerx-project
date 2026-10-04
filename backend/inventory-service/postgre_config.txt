@@ -1,0 +1,7 @@
+docker run -d --name inventory-postgres ^
+  -e POSTGRES_DB=inventory_db ^
+  -e POSTGRES_USER=inventory_user ^
+  -e POSTGRES_PASSWORD=0000 ^
+  -p 5432:5432 ^
+  -v inventory_pgdata:/var/lib/postgresql/data ^
+  postgres:16

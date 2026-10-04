@@ -1,0 +1,58 @@
+services:
+  inventory-service:
+    build:
+      context: ./backend/inventory-service
+    env_file:
+      - ./backend/inventory-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      REDIS_HOST: host.docker.internal
+    command: python manage.py runserver 0.0.0.0:8000 --noreload
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  cdm-service:
+    build:
+      context: ./backend/cdm-service
+    env_file:
+      - ./backend/cdm-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      REDIS_HOST: host.docker.internal
+    command: python manage.py runserver 0.0.0.0:8000 --noreload
+    ports:
+      - "8001:8000"
+    volumes:
+      - cdm_uploads:/app/media
+    restart: unless-stopped
+
+  cdm-worker:
+    build:
+      context: ./backend/cdm-service
+    env_file:
+      - ./backend/cdm-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      REDIS_HOST: host.docker.internal
+    command: celery -A my_project worker --loglevel=info --concurrency=1
+    volumes:
+      - cdm_uploads:/app/media
+    depends_on:
+      inventory-service:
+        condition: service_started
+    restart: unless-stopped
+
+  cdm-beat:
+    build:
+      context: ./backend/cdm-service
+    env_file:
+      - ./backend/cdm-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      REDIS_HOST: host.docker.internal
+    command: celery -A my_project beat --loglevel=info
+    restart: unless-stopped
+
+volumes:
+  cdm_uploads:
